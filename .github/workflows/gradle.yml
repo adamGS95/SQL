@@ -23,14 +23,10 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Install Docker Compose
-      run: |
-        sudo curl -L "https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-        sudo chmod +x /usr/local/bin/docker-compose
-        docker-compose --version
-
-    - name: Run docker-compose
-      run: docker-compose up --build -d
+    - name: Start database container
+      uses: hoverkraft-tech/compose-action@v2.0.1
+      with:
+        compose-file: './docker-compose.yml'  # путь к вашему docker-compose
 
     - name: Waiting for container start
       run: sleep 30
